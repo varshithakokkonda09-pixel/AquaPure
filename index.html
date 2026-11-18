@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aquapure — Water Tank Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="logo" id="logo" role="link" tabindex="0">
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M20 4C20 4 8 17.5 8 25a12 12 0 0 0 24 0C32 17.5 20 4 20 4Z" fill="#fff"/>
+        <path d="M14 26.5a6 6 0 0 0 6 5.5" stroke="#0a7cc4" stroke-width="2.6" stroke-linecap="round"/>
+      </svg>
+      Aquapure
+    </div>
+    <nav aria-label="Main">
+      <a href="#" data-nav="home">Dashboard</a>
+      <a href="#alerts" data-nav="alerts">🔔 Alerts <span class="count" id="navCount"></span></a>
+      <a href="#trends" data-nav="trends">📈 Trends</a>
+    </nav>
+    <div class="live"><span class="dot"></span><span id="clock">Live monitoring</span></div>
+  </div>
+  <div class="hero" id="hero">
+    <h1 id="heroTitle">Clean water, always in view.</h1>
+    <p id="heroText"></p>
+  </div>
+</header>
+
+<main id="view"></main>
+
+<footer>Aquapure · Readings are simulated for demo until sensors are connected. You can also enter your own readings for any tank. Wastage figures are estimates from level changes.</footer>
+
+<div id="toasts" aria-live="polite"></div>
+
+<!-- Add / rename modal -->
+<div class="overlay" id="tankModal" role="dialog" aria-modal="true" aria-labelledby="tmTitle">
+  <form class="modal" id="tankForm">
+    <h3 id="tmTitle">Add a water tank</h3>
+    <p class="sub" id="tmSub">Give it a name you'll recognise.</p>
+    <div class="field">
+      <label for="tName">Tank name</label>
+      <input id="tName" maxlength="30" placeholder="e.g. Home" autocomplete="off">
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="field">
+      <label for="tCap">Capacity (litres)</label>
+      <input id="tCap" type="number" min="50" max="100000" step="50" value="1000">
+    </div>
+    <div class="err" id="tErr"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button type="submit" class="btn btn-primary" id="tSubmit">Add tank</button>
+    </div>
+  </form>
+</div>
+
+<!-- Manual readings modal -->
+<div class="overlay" id="readModal" role="dialog" aria-modal="true" aria-labelledby="rmTitle">
+  <form class="modal" id="readForm">
+    <h3 id="rmTitle">Enter readings</h3>
+    <p class="sub">Type in values from your own test kit or meter. Live simulation pauses for this tank until you turn it back on.</p>
+    <div class="two">
+      <div class="field"><label for="rPh">pH</label><input id="rPh" type="number" step="0.1" min="0" max="14"></div>
+      <div class="field"><label for="rTemp">Temperature (°C)</label><input id="rTemp" type="number" step="0.1" min="-5" max="60"></div>
+      <div class="field"><label for="rTurb">Turbidity (NTU)</label><input id="rTurb" type="number" step="0.1" min="0" max="100"></div>
+      <div class="field"><label for="rLevel">Water level (%)</label><input id="rLevel" type="number" step="1" min="0" max="100"></div>
+    </div>
+    <div class="err" id="rErr"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+      <button type="submit" class="btn btn-primary">Save readings</button>
+    </div>
+  </form>
+</div>
+
+<!-- Confirm delete modal -->
+<div class="overlay" id="delModal" role="dialog" aria-modal="true" aria-labelledby="dmTitle">
+  <div class="modal">
+    <h3 id="dmTitle">Remove this tank?</h3>
+    <p class="sub" id="delText"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Keep it</button>
+      <button type="button" class="btn btn-danger" id="delYes">Remove</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
